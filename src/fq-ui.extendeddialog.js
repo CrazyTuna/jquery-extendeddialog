@@ -1,7 +1,7 @@
 /**
  * @author Crazy Tuna & Great Salmon
  * powered by @Foreign Quiche
- * version: 1.0.0 - work from Jquery 1.7.0 and Jquery ui 1.9.2
+ * version: 1.0.0 - work from Jquery 1.7.0 and Jquery ui 1.9.0
  */
 (function ($) {
 
@@ -84,7 +84,7 @@
                     .appendTo(this.uiDialogTitlebarRestore);
 
                 this._hoverable(this.uiDialogTitlebarRestore);
-                this._focusable(this.uiDialogTitlebarRestore);                
+                this._focusable(this.uiDialogTitlebarRestore);
             }
 
             if (this.uiDialogTitlebarRestore.parent().length === 0) {
@@ -145,7 +145,7 @@
                     this._focusable(this.uiDialogTitlebarMinimize);
                 }
 
-                this.uiDialogTitlebarMinimize.appendTo(this.uiDialogTitlebar);                
+                this.uiDialogTitlebarMinimize.appendTo(this.uiDialogTitlebar);
             } else {
                 if (typeof this.uiDialogTitlebarMinimize !== 'undefined') {
                     this.uiDialogTitlebarMinimize.detach();
@@ -177,18 +177,19 @@
                     }
                 });
 
-                var offsetHeightDialog = this.uiDialog.outerHeight(true) - this.uiDialog.height();
+                //To set element height
                 var offsetWidthDialog = this.uiDialog.outerWidth(true) - this.uiDialog.width();
                 this.uiDialog.css({
                     'width': ($(window).width() - offsetWidthDialog) + 'px',
-                    'height': ($(window).height() - offsetHeightDialog) + 'px',
+                    'height': 'auto',
                     'top': 0,
                     'left': 0,
                     'z-index': zIndex
                 });
 
-                var offsetHeight = this.element.outerHeight(true) - this.element.height();
-                this.element.css('height', (this.uiDialog.innerHeight() - this.uiDialogTitlebar.outerHeight(true) - this.uiDialogButtonPane.outerHeight(true) - offsetHeight) + 'px');
+                var offsetHeightElement = this.element.outerHeight(true) - this.element.height();
+                var offsetHeightDialog = this.uiDialog.outerHeight(true) - this.uiDialog.height();
+                this.element.css('height', ($(window).height() - this.uiDialogTitlebar.outerHeight(true) - this.uiDialogButtonPane.outerHeight(true) - offsetHeightElement - offsetHeightDialog) + 'px');
 
                 this._hide(this.uiDialogTitlebarMaximize);
                 this._show(this.uiDialogTitlebarRestore);
@@ -245,7 +246,7 @@
             }
 
             this._isMinimize = minimize;
-        },        
+        },
 
         _setOption: function (key, value) {
             if (key === 'maximizeIcon') {
@@ -314,7 +315,7 @@
                     if (that._isMaximize) {
                         that.restore(event);
                     } else {
-                        that._maximize(event);
+                        that.maximize(event);
                     }
                 });
             }
