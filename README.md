@@ -1,6 +1,6 @@
 # Jquery-ui Extended dialog #
 
-[Options](#Options) | [Methods](#Methods) | [Events](#Events)
+[Options](#options) | [Methods](#methods) | [Events](#events)
 ------------- | ------------- | -------------
 [maximizable](#maximizable) | [maximize](#maximize) | beforeMaximize
 [maximizeIcon](#maximizeIcon) | [minimize](#minimize) | beforeMinimize
@@ -28,3 +28,10 @@
 ### minimize ###
 ### restore ###
 
+## Events ##
+### beforeMaximize ###
+### beforeMinimize ###
+### beforeRestore ###
+### maximize ###
+### minimize ###
+### restore ###
