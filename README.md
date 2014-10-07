@@ -2,7 +2,7 @@
 
 Options | Methods | Events
 ------------- | ------------- | -------------
-[maximizable](https://github.com/CrazyTuna/jquery-extendeddialog/blob/master/README.md#options) | maximize | beforeMaximize
+[maximizable](#options) | maximize | beforeMaximize
 maximizeIcon | minimize | beforeMinimize
 maximizeText | restore | beforeRestore
 minimizable ||maximize
