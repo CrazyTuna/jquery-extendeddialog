@@ -2,9 +2,9 @@
 
 [Options](#options) | [Methods](#methods) | [Events](#events)
 ------------- | ------------- | -------------
-[maximizable](#maximizable) | [maximize](#maximize) | [beforeMaximize](#beforeMaximize)
-[maximizeIcon](#maximizeIcon) | [minimize](#minimize) | [beforeMinimize](#beforeMinimize)
-[maximizeText](#maximizeText) | [restore](#restore) | [beforeRestore](#beforeRestore)
+[maximizable](#maximizable) | [maximize](#maximize) | [beforeMaximize](#beforemaximize)
+[maximizeIcon](#maximizeIcon) | [minimize](#minimize) | [beforeMinimize](#beforeminimize)
+[maximizeText](#maximizeText) | [restore](#restore) | [beforeRestore](#beforerestore)
 [minimizable](#minimizable) || [maximize](#maximize-1)
 [minimizeIcon](#minimizeIcon) || [minimize](#minimize-1)
 [minimizeText](#minimizeText) || [restore](#restore-1)
