@@ -35,15 +35,15 @@
             this._isMaximize = false;
 
             // Get de minimize container
-            if ($(this.defaults.fixedContainerSelector).length == 1) {
+            if ($('#dialog-extend-fixed-container').length == 1) {
                 this.defaults.fixedContainer = $('#dialog-extend-fixed-container');
             } else {
                 this.defaults.fixedContainer = $('<div id="dialog-extend-fixed-container"></div>').appendTo('body');
             }
 
             // Add default class to the wrapper
-            this.uiDialog.addClass('ui-dialog-extended')
-                .addClass(this.options.minimizeLocation);
+            this.uiDialog.addClass('ui-dialog-extended');
+            this._setMinimizeLocation();
 
             // Get the close button
             this.uiDialogTitlebarClose = this.uiDialogTitlebar.find('.ui-dialog-titlebar-close')
@@ -115,7 +115,7 @@
                     this._focusable(this.uiDialogTitlebarMaximize);
                 }
 
-                this.uiDialogTitlebarMaximize.appendTo(this.uiDialogTitlebar);
+                this.uiDialogTitlebarClose.after(this.uiDialogTitlebarMaximize);
                 this._createRestoreButton();
             } else {
                 if (typeof this.uiDialogTitlebarMaximize !== 'undefined') {
@@ -228,7 +228,7 @@
                 this._focusedElement = null;
                 this.uiDialog.appendTo(this.defaults.fixedContainer);
                 this._hide(this.uiDialogTitlebarMinimize);
-                this._show(this.uiDialogTitlebarRestore);
+                this._show(this.uiDialogTitlebarRestore);                
 
             } else {
                 if (this.options.draggable && $.fn.draggable) {
@@ -246,6 +246,11 @@
             }
 
             this._isMinimize = minimize;
+        },
+
+        _setMinimizeLocation: function () {
+            this.uiDialog.removeClass('left').removeClass('right')
+               .addClass(this.options.minimizeLocation);
         },
 
         _setOption: function (key, value) {
@@ -273,7 +278,7 @@
                 if (!value && this._isMaximize) {
                     this._maximize(false);
                 }
-                this._makeMinimizable(value);
+                this._makeMaximizable(value);
             }
 
             if (key === 'maximizeText') {
@@ -304,16 +309,27 @@
                     this._changeIconText(this.uiDialogTitlebarRestoreText, value);
                 }
             }
+
+            if (key === 'minimizeLocation') {
+                this._setMinimizeLocation();
+            }
         },
 
         _toggleDblclickEvent: function () {
             var that = this;
-            this.uiDialogTitlebar.off('dblclick', '**');
-            if (this.options.resizeOnDlbclick && this.options.maximizable) {
+            this.uiDialogTitlebar.off('dblclick');
+            if (this.options.resizeOnDlbclick && (this.options.maximizable || this.options.minimizable)) {
                 this.uiDialogTitlebar.on('dblclick', function (event) {
                     event.preventDefault();
                     if (that._isMaximize) {
                         that.restore(event);
+                    } else if (that._isMinimize) {
+                        if (that.lastState == 'maximize') {
+                            that.maximize(event);
+                        } else {
+                            that.restore(event);
+                        }
+                        
                     } else {
                         that.maximize(event);
                     }
@@ -330,11 +346,20 @@
         },
 
         maximize: function (event) {
+            if (!this._isOpen) {
+                this._show(this.uiDialog);
+                this._isOpen = true;
+            }
+
             if (!this.options.maximizable || this._isMaximize || this._trigger('beforeMaximize', event) === false) {
                 return;
             }
 
+            this._show(this.uiDialog);
+
+            this.lastState = null;
             if (this._isMinimize) {
+                this.lastState = 'minimize';
                 this._minimize(false);
             }
 
@@ -343,11 +368,18 @@
         },
 
         minimize: function (event) {
+            if (!this._isOpen) {
+                this._show(this.uiDialog);
+                this._isOpen = true;
+            }
+
             if (!this.options.minimizable || this._isMinimize || this._trigger('beforeMinimize', event) === false) {
                 return;
             }
 
+            this.lastState = null;
             if (this._isMaximize) {
+                this.lastState = 'maximize';
                 this._maximize(false);
             }
 
@@ -362,12 +394,12 @@
             } else if (this._isMaximize) {
                 this._maximize(false);
             }
-
+            this.lastState = null;
             this._super();
         },
 
         restore: function (event) {
-            if (!(this._isMinimize || this._isMaximize) || this._trigger('beforeRestore', event) === false) {
+            if (this._trigger('beforeRestore', event) === false) {
                 return;
             }
 
