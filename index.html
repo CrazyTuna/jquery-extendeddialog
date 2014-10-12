@@ -4,32 +4,279 @@
     <meta charset="utf-8">
     <title>ForeignQuiche Bootstrap Table</title>
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.9.0/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="https://rawgit.com/CrazyTuna/jquery-extendeddialog/master/src/fq-ui.extendeddialog.css">
-    <style>
-       
+    <link rel="stylesheet" href="src/fq-ui.extendeddialog.css">
+    <style type="text/css">
+        body {
+            font-size: 0.8em;
+        }
+        section > header, section > footer {
+            background-color: #4E6A75;
+            color: white;
+            height: 50px;
+            line-height: 50px;
+            font-size: 20px;
+            text-align: center;
+        }
+        section > footer {
+            text-align: left;
+            padding-left:20px;
+        }
+        section > form {
+            margin-left: 50px;
+            overflow-y: hidden;
+        }
+
+            section > form > div.col {
+                float: left;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+                section > form > div.col > fieldset {
+                    margin-top: 20px;
+                    width: 200px;
+                }
+
+                    section > form > div.col > fieldset > ul {
+                        list-style-type: none;
+                        padding: 0;
+                    }
+                        section > form > div.col > fieldset > ul > li > input[type=text] {
+                            width: 95px;
+                        }
+
+                        section > form > div.col > fieldset > ul > li > button {
+                            width: 100px;
+                        }
     </style>
 </head>
 <body>
-    <a id="open">Open</a>
-    <div id="dialog" class="dialog" title="Basic dialog">
-        <p>This is the default dialog which is useful for displaying information. The dialog window can be moved, resized and closed with the 'x' icon.</p>
-    </div>
+    <section>
+        <header>Extended Dialog Widget Demos</header>
+        <form>
+            <div class="col">
+                <fieldset>
+                    <legend>Buttons</legend>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="minimize" checked/>
+                            <label for="minimize">Minimize button</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="maximize" checked />
+                            <label for="maximize">Maximize button</label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Icons</legend>
+                    <ul>
+                        <li>
+                            <label for="iconMin">Minimize icon</label>
+                            <input id="iconMin" type="text" value="ui-icon-minus" />
+                        </li>
+                        <li>                            
+                            <label for="iconMax">Maximize icon</label>
+                            <input id="iconMax" type="text" value="ui-icon-extlink" />
+                        </li>
+                        <li>
+                            <label for="iconRes">Restore icon</label>
+                            <input id="iconRes" type="text" value="ui-icon-newwin" />
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Texts</legend>
+                    <ul>
+                        <li>
+                            <label for="txtMin">Minimize text</label>
+                            <input id="txtMin" type="text" value="Minimize" />
+                        </li>
+                        <li>
+                            <label for="txtMax">Maximize text</label>
+                            <input id="txtMax" type="text" value="Maximize" />
+                        </li>
+                        <li>
+                            <label for="txtRes">Restore text</label>
+                            <input id="txtRes" type="text" value="Restore" />
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="col">
+                <fieldset>
+                    <legend>Resize on Double-click</legend>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="rdDblClick" checked />
+                            <label for="rdDblClick">Resize on double click</label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Minimize location</legend>
+                    <ul>
+                        <li>
+                            <input type="radio" id="rdLeft" name="location" checked value="left" />
+                            <label for="rdLeft">Left</label>
+                        </li>
+                        <li>
+                            <input type="radio" id="rdRight" name="location" value="right" / >
+                            <label for="rdRight">Right</label>
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+            <div class="col">
+                <fieldset>
+                    <legend>Events</legend>
+                    <ul>
+                        <li>
+                            <input type="checkbox" id="chkbMin" checked />
+                            <label for="chkbMin">beforeMinimize</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="chkMin" checked />
+                            <label for="chkMin">Minimize</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="chkbMax" checked />
+                            <label for="chkbMax">beforeMaximize</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="chkMax" checked />
+                            <label for="chkMax">Maximize</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="chkbRes" checked />
+                            <label for="chkbRes">beforeRestore</label>
+                        </li>
+                        <li>
+                            <input type="checkbox" id="chkRes" checked />
+                            <label for="chkRes">Restore</label>
+                        </li>
+                    </ul>
+                </fieldset>
+                <fieldset>
+                    <legend>Methods (last dialog)</legend>
+                    <ul>
+                        <li>
+                            <button id="btnMin">Minimize</button>
+                        </li>
+                        <li>
+                            <button id="btnMax">Maximize</button>
+                        </li>
+                        <li>
+                            <button id="btnRes">Restore</button>
+                        </li>
+                        <li>
+                            <button id="btnOpe">Open</button>
+                        </li>
+                        <li>
+                            <button id="btnClo">Close</button>
+                        </li>
+                        <li>
+                            <button id="btnDes">Destroy</button>
+                        </li>
+                    </ul>
+                </fieldset>
+            </div>
+        </form>
+        <footer>
+            <button id="Add">Add Dialog</button>
+            <button id="Change">Change Options (last dialog)</button>
+        </footer>
+    </section>
     <script src="https://code.jquery.com/jquery-1.7.0.js"></script>
     <script src="https://code.jquery.com/ui/1.9.0/jquery-ui.js"></script>
-    <script src="https://rawgit.com/CrazyTuna/jquery-extendeddialog/master/src/fq-ui.extendeddialog.js"></script>
+    <script src="src/fq-ui.extendeddialog.js"></script>
     <script>
+
+        var lastdialog = null;
+        var i = 1;
         $(function () {
-            $(".dialog").extendeddialog({
+            $('#Add').on('click', function (event) {
+                event.preventDefault();
+                lastdialog = $('<div id="dialog" class="dialog" title="Basic dialog' + i + '"></div>').extendeddialog(getOptions());
+                i++;
+            });
+
+            $('#Change').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('option', getOptions());
+                }
+            });
+
+            $('#btnMin').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('minimize');
+                }
+            });
+
+            $('#btnMax').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('maximize');
+                }
+            });
+
+            $('#btnRes').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('restore');
+                }
+            });
+                        
+            $('#btnOpe').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('open');
+                }
+            });
+            $('#btnClo').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('close');
+                }
+            });
+
+            $('#btnDes').on('click', function (event) {
+                event.preventDefault();
+                if (lastdialog != null) {
+                    lastdialog.extendeddialog('destroy');
+                    lastdialog = null;
+                }
+            });
+        });
+
+        var getOptions = function () {
+            return {
+                minimizable: $('#minimize').is(':checked'),
+                maximizable: $('#maximize').is(':checked'),
+                minimizeIcon: $('#iconMin').val(),
+                maximizeIcon: $('#iconMax').val(),
+                maximizeIcon: $('#iconMax').val(),
+                restoreIcon: $('#iconRes').val(),
+                minimizeText: $('#txtMin').val(),
+                maximizeText: $('#txtMax').val(),
+                restoreText: $('#txtRes').val(),
+                resizeOnDlbclick: $('#rdDblClick').is(':checked'),
+                minimizeLocation: $('input[type=radio][name=location]:checked').val(),
+                beforeMinimize: $('#chkbMin').is(':checked') ? function () { $(this).append('<p>Before Minimize</p>'); } : $.noop,
+                beforeMaximize: $('#chkbMax').is(':checked') ? function () { $(this).append('<p>Before Maximize</p>'); } : $.noop,
+                beforeRestore: $('#chkbRes').is(':checked') ? function () { $(this).append('<p>Before Restore</p>'); } : $.noop,
+                minimize: $('#chkMin').is(':checked') ? function () { $(this).append('<p>Minimize</p>'); } : $.noop,
+                maximize: $('#chkMax').is(':checked') ? function () { $(this).append('<p>Maximize</p>'); } : $.noop,
+                restore: $('#chkRes').is(':checked') ? function () { $(this).append('<p>Restore</p>'); } : $.noop,
                 buttons: {
                     'Ok': function () {
                         $(this).extendeddialog('close');
                     }
                 }
-            });
-            $("#open").on('click', function () {
-                $(".dialog").extendeddialog('open');
-            });
-        });
+            };
+        }
     </script>
 </body>
 </html>
