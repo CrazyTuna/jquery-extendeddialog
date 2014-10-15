@@ -14,14 +14,14 @@ Provides minimze and maximize options for jquery ui dialog widget by entending i
 [Options](#options) | [Methods](#methods) | [Events](#events)
 ------------- | ------------- | -------------
 [maximizable](#maximizable) | [maximize](#maximize) | [beforeMaximize](#beforemaximize)
-[maximizeIcon](#maximizeIcon) | [minimize](#minimize) | [beforeMinimize](#beforeminimize)
-[maximizeText](#maximizeText) | [restore](#restore) | [beforeRestore](#beforerestore)
+[maximizeIcon](#maximizeicon) | [minimize](#minimize) | [beforeMinimize](#beforeminimize)
+[maximizeText](#maximizetext) | [restore](#restore) | [beforeRestore](#beforerestore)
 [minimizable](#minimizable) || [maximize](#maximize-1)
-[minimizeIcon](#minimizeIcon) || [minimize](#minimize-1)
-[minimizeText](#minimizeText) || [restore](#restore-1)
-[resizeOnDlbclick](#resizeOnDlbclick) ||
-[restoreIcon](#restoreIcon) ||
-[restoreText](#restoreText) ||
+[minimizeIcon](#minimizeicon) || [minimize](#minimize-1)
+[minimizeText](#minimizetext) || [restore](#restore-1)
+[resizeOnDlbclick](#resizeondlbclick) ||
+[restoreIcon](#restoreicon) ||
+[restoreText](#restoretext) ||
 
 ## Options
 
