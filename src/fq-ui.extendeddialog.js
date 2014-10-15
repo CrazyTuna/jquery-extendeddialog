@@ -17,16 +17,16 @@
             maximizable: true,
             maximize: null,
             maximizeIcon: 'ui-icon-extlink',
-            maximizeText: 'Maximize',
+            maximizeText: 'maximize',
             minimizable: true,
             minimize: null,
             minimizeIcon: 'ui-icon-minus',
             minimizeLocation: 'left',
-            minimizeText: 'Minimize',
+            minimizeText: 'minimize',
             resizeOnDlbclick: true,
             restore: null,
             restoreIcon: 'ui-icon-newwin',
-            restoreText: 'Restore'
+            restoreText: 'restore'
         },
 
         _create: function () {
