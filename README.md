@@ -33,6 +33,11 @@ If set to "true", the dialog will be maximizable by the tittle bar maximize butt
 
 ### maximizeIcon ###
 ### maximizeText ###
+- Type: string
+- Default: maximize
+
+Specifies the text for the maximize button. Note that the maximize text is visibly hidden when using a standard theme.
+
 ### minimizable ###
 - Type: boolean
 - Default: true
@@ -40,9 +45,18 @@ If set to "true", the dialog will be maximizable by the tittle bar maximize butt
 If set to "true", the dialog will be minimizable by the tittle bar minimize button.
 ### minimizeIcon ###
 ### minimizeText ###
+- Type: string
+- Default: minimize
+
+Specifies the text for the minimize button. Note that the minimize text is visibly hidden when using a standard theme.
+
 ### resizeOnDlbclick ###
 ### restoreIcon ###
 ### restoreText ###
+- Type: string
+- Default: restore
+
+Specifies the text for the restore button. Note that the restore text is visibly hidden when using a standard theme.
 
 ## Methods ##
 ### maximize ###
