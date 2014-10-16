@@ -3,7 +3,7 @@
 Provides minimze and maximize options for jquery ui dialog widget by entending it.
 
 ## Downloads
- - For Jquery Ui v1.10.0 + (Coming soon)
+ - [For Jquery Ui v1.10.0 +] (https://github.com/CrazyTuna/jquery-extendeddialog/releases/tag/v1.1.0)
  - [For Jquery Ui v1.9.0 +] (https://github.com/CrazyTuna/jquery-extendeddialog/releases/tag/v1.0.0)
 
 ## Samples
