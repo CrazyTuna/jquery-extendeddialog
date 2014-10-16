@@ -1,12 +1,12 @@
 /**
  * @author Crazy Tuna & Great Salmon
  * powered by @Foreign Quiche
- * version: 1.0.0 - work from Jquery 1.7.0 and Jquery ui 1.10.0
+ * version: 1.0.0 - work from Jquery 1.7.0 and Jquery ui 1.9.0
  */
 (function ($) {
 
     $.widget('fq-ui.extendeddialog', $.ui.dialog, {
-        version: '1.1.0',
+        version: '1.0.0',
         defaults: {
             fixedContainer: undefined
         },
@@ -45,12 +45,6 @@
             this.uiDialog.addClass('ui-dialog-extended');
             this._setMinimizeLocation();
 
-            this._toggleDblclickEvent();
-        },
-
-        _createTitlebar: function () {
-            this._super();
-
             // Get the close button
             this.uiDialogTitlebarClose = this.uiDialogTitlebar.find('.ui-dialog-titlebar-close')
                 .addClass('ui-dialog-titlebar-button');
@@ -58,37 +52,39 @@
             // Set minimize and maximize options
             this._makeMaximizable(this.options.maximizable);
             this._makeMinimizable(this.options.minimizable);
+
+            this._toggleDblclickEvent();
         },
 
-        _changeIconClass: function (element, iconClass) {
-            element.button("option", "icons", { primary: iconClass });
+        _changeIconClass: function (element, oldClass, iconClass) {
+            element.removeClass(oldClass)
+                .addClass(iconClass);
         },
 
         _changeIconText: function (element, text) {
-            element.button("option", "label", text);
+            element.text(text);
         },
 
-        _createButton: function (iconClass, iconText) {
-            return $('<button></button>')
-                .button({
-                    label: iconText,
-                    icons: {
-                        primary: iconClass
-                    },
-                    text: false
-                })
-                .addClass('ui-dialog-titlebar-close ui-dialog-titlebar-button');
+        _createButton: function () {
+            return $('<a href="#"></a>')
+                .addClass('ui-dialog-titlebar-close ui-corner-all ui-dialog-titlebar-button')
+                .attr('role', 'button');
         },
 
         _createRestoreButton: function () {
+            var that = this;
             if (typeof this.uiDialogTitlebarRestore === 'undefined') {
-                this.uiDialogTitlebarRestore = this._createButton(this.options.restoreIcon, this.options.restoreText).hide();
-                this._on(this.uiDialogTitlebarRestore, {
-                    click: function (event) {
+                this.uiDialogTitlebarRestore = this._createButton()
+                    .hide().on('click', function (event) {
                         event.preventDefault();
-                        this.restore(event);
-                    }
-                });
+                        that.restore(event);
+                    });
+
+                this.uiDialogTitlebarRestoreText = this._createIcon(this.options.restoreIcon, this.options.restoreText)
+                    .appendTo(this.uiDialogTitlebarRestore);
+
+                this._hoverable(this.uiDialogTitlebarRestore);
+                this._focusable(this.uiDialogTitlebarRestore);
             }
 
             if (this.uiDialogTitlebarRestore.parent().length === 0) {
@@ -96,17 +92,27 @@
             }
         },
 
+        _createIcon: function (iconClass, iconText) {
+            return $('<span>')
+                .addClass('ui-icon')
+                .addClass(iconClass)
+                .text(iconText);
+        },
+
         _makeMaximizable: function (maximizable) {
+            var that = this;
             if (maximizable) {
                 if (typeof this.uiDialogTitlebarMaximize === 'undefined') {
-                    this.uiDialogTitlebarMaximize = this._createButton(this.options.maximizeIcon, this.options.maximizeText);
-
-                    this._on(this.uiDialogTitlebarMaximize, {
-                        click: function (event) {
-                            event.preventDefault();
-                            this.maximize(event);
-                        }
+                    this.uiDialogTitlebarMaximize = this._createButton().on('click', function (event) {
+                        event.preventDefault();
+                        that.maximize(event);
                     });
+
+                    this.uiDialogTitlebarMaximizeText = this._createIcon(this.options.maximizeIcon, this.options.maximizeText)
+                        .appendTo(this.uiDialogTitlebarMaximize);
+
+                    this._hoverable(this.uiDialogTitlebarMaximize);
+                    this._focusable(this.uiDialogTitlebarMaximize);
                 }
 
                 this.uiDialogTitlebarClose.after(this.uiDialogTitlebarMaximize);
@@ -127,17 +133,19 @@
             if (minimizable) {
                 this._createRestoreButton();
                 if (typeof this.uiDialogTitlebarMinimize === 'undefined') {
-                    this.uiDialogTitlebarMinimize = this._createButton(this.options.minimizeIcon, this.options.minimizeText);
-
-                    this._on(this.uiDialogTitlebarMinimize, {
-                        click: function (event) {
-                            event.preventDefault();
-                            this.minimize(event);
-                        }
+                    this.uiDialogTitlebarMinimize = this._createButton().on('click', function (event) {
+                        event.preventDefault();
+                        that.minimize(event);
                     });
+
+                    this.uiDialogTitlebarMinimizeText = this._createIcon(this.options.minimizeIcon, this.options.minimizeText)
+                        .appendTo(this.uiDialogTitlebarMinimize);
+
+                    this._hoverable(this.uiDialogTitlebarMinimize);
+                    this._focusable(this.uiDialogTitlebarMinimize);
                 }
 
-                this.uiDialogTitlebarMinimize.appendTo(this.uiDialogTitlebar);                
+                this.uiDialogTitlebarMinimize.appendTo(this.uiDialogTitlebar);
             } else {
                 if (typeof this.uiDialogTitlebarMinimize !== 'undefined') {
                     this.uiDialogTitlebarMinimize.detach();
@@ -238,7 +246,7 @@
             }
 
             this._isMinimize = minimize;
-        },        
+        },
 
         _setMinimizeLocation: function () {
             this.uiDialog.removeClass('left').removeClass('right')
@@ -246,6 +254,24 @@
         },
 
         _setOption: function (key, value) {
+            if (key === 'maximizeIcon') {
+                if (typeof this.uiDialogTitlebarMaximizeText !== 'undefined') {
+                    this._changeIconClass(this.uiDialogTitlebarMaximizeText, this.options.maximizeIcon, value);
+                }
+            }
+
+            if (key === 'minimizeIcon') {
+                if (typeof this.uiDialogTitlebarMinimizeText !== 'undefined') {
+                    this._changeIconClass(this.uiDialogTitlebarMinimizeText, this.options.minimizeIcon, value);
+                }
+            }
+
+            if (key === 'restoreIcon') {
+                if (typeof this.uiDialogTitlebarRestoreText !== 'undefined') {
+                    this._changeIconClass(this.uiDialogTitlebarRestoreText, this.options.restoreIcon, value);
+                }
+            }
+
             this._super(key, value);
 
             if (key === 'maximizable') {
@@ -255,15 +281,9 @@
                 this._makeMaximizable(value);
             }
 
-            if (key === 'maximizeIcon') {
-                if (typeof this.uiDialogTitlebarMaximize !== 'undefined') {
-                    this._changeIconClass(this.uiDialogTitlebarMaximize, value);
-                }
-            }
-           
             if (key === 'maximizeText') {
-                if (typeof this.uiDialogTitlebarMaximize !== 'undefined') {
-                    this._changeIconText(this.uiDialogTitlebarMaximize, value);
+                if (typeof this.uiDialogTitlebarMaximizeText !== 'undefined') {
+                    this._changeIconText(this.uiDialogTitlebarMaximizeText, value);
                 }
             }
 
@@ -274,15 +294,9 @@
                 this._makeMinimizable(value);
             }
 
-            if (key === 'minimizeIcon') {
-                if (typeof this.uiDialogTitlebarMinimize !== 'undefined') {
-                    this._changeIconClass(this.uiDialogTitlebarMinimize, value);
-                }
-            }
-
             if (key === 'minimizeText') {
-                if (typeof this.uiDialogTitlebarMinimize !== 'undefined') {
-                    this._changeIconText(this.uiDialogTitlebarMinimize, value);
+                if (typeof this.uiDialogTitlebarMinimizeText !== 'undefined') {
+                    this._changeIconText(this.uiDialogTitlebarMinimizeText, value);
                 }
             }
 
@@ -290,15 +304,9 @@
                 this._toggleDblclickEvent();
             }
 
-            if (key === 'restoreIcon') {
-                if (typeof this.uiDialogTitlebarRestore !== 'undefined') {
-                    this._changeIconClass(this.uiDialogTitlebarRestore, value);
-                }
-            }
-
             if (key === 'restoreText') {
-                if (typeof this.uiDialogTitlebarRestore !== 'undefined') {
-                    this._changeIconText(this.uiDialogTitlebarRestore, value);
+                if (typeof this.uiDialogTitlebarRestoreText !== 'undefined') {
+                    this._changeIconText(this.uiDialogTitlebarRestoreText, value);
                 }
             }
 
@@ -321,7 +329,7 @@
                         } else {
                             that.restore(event);
                         }
-
+                        
                     } else {
                         that.maximize(event);
                     }
@@ -346,6 +354,8 @@
             if (!this.options.maximizable || this._isMaximize || this._trigger('beforeMaximize', event) === false) {
                 return;
             }
+
+            this._show(this.uiDialog);
 
             this.lastState = null;
             if (this._isMinimize) {
@@ -384,7 +394,6 @@
             } else if (this._isMaximize) {
                 this._maximize(false);
             }
-
             this.lastState = null;
             this._super();
         },
